@@ -1,8 +1,8 @@
 @extends("layout.app")
 
-@section("title")
+@section('title')
 
-@section("content")
+@section('content')
 
-this is homepage
+    this is homepage
 @endsection
