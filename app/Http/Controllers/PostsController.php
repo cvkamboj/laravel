@@ -2,28 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
+use App\Models\BlogPosts;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    private $posts = [
-        1 => [
-            "title" => "Hey first title",
-            "content" => "this is the content for the fist post",
-            "is_new" => true
-        ],
-        2 => [
-            "title" => "Hey second title",
-            "content" => "this is the content for the second post",
-            "is_new" => false
-        ],
-        3 => [
-            "title" => "Hey third title",
-            "content" => "this is the content for the third post",
-            "is_new" => false
-        ]
-    ];
-
 
     /**
      * Display a listing of the resource.
@@ -32,7 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view("posts.index", ['posts' => $this->posts]);
+        return view("posts.index", ['posts' => BlogPosts::all()]);
     }
 
     /**
@@ -42,7 +26,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view("posts.create");
     }
 
     /**
@@ -51,9 +35,16 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        //
+        $validated = $request->validated();
+
+        $post = new BlogPosts();
+        $post->title = $validated->input("title");
+        $post->content = $validated->input("content");
+        $post->save();
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -64,8 +55,7 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        abort_if(!isset($this->posts[$id]), 404);
-        return view("posts.show", ['post' => $this->posts[$id]]);
+        return view("posts.show", ['post' => BlogPosts::findOrFail($id)]);
     }
 
     /**
