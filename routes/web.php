@@ -20,4 +20,4 @@ Route::get('/', [HomeController::class, 'home'])->name("home.index");
 
 Route::get('/', [HomeController::class, 'contact'])->name("home.contact");
 
-Route::resource('posts', PostsController::class)->only(["index", "show", "create", "store"])->whereNumber("post");
+Route::resource('posts', PostsController::class)->whereNumber("post");

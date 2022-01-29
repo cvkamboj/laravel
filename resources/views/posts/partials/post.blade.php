@@ -3,3 +3,9 @@
 @else
     <div>{{ $postKey }}.{{ $singlePost['title'] }}</div>
 @endif
+
+<form action="{{ route("posts.destroy", $singlePost['id']) }}" method="POST">
+    @csrf
+    @method("delete")
+    <input type="submit" value="Delete">
+</form>
