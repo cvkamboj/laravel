@@ -1,13 +1,13 @@
-@extends("layout.app")
+@extends('layouts.app')
 
-@section('title')
-@if(session("status"))
-    <div style="color:red">{{ session("status") }}</div>
-@endif
+@section('title', 'Blog Posts')
+
 @section('content')
-    @forelse ($posts as $postKey => $singlePost)
-        @include("posts.partials.post")
-    @empty
-        <div>There are no posts.</div>
-    @endforelse
+{{-- @each('posts.partials.post', $posts, 'post') --}}
+@forelse ($posts as $key => $post)
+  @include('posts.partials.post', [])
+@empty
+No posts found!
+@endforelse
+
 @endsection

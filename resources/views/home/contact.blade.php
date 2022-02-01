@@ -1,9 +1,7 @@
-@extends("layout.app")
+@extends('layouts.app')
 
-@section('title')
+@section('title', 'Contact page')
 
 @section('content')
-
-    this is contact page
-
+<h1>Contact page</h1>
 @endsection
